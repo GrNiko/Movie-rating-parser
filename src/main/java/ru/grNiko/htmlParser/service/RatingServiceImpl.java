@@ -1,16 +1,18 @@
 package ru.grNiko.htmlParser.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.grNiko.htmlParser.entity.Rating;
 import ru.grNiko.htmlParser.repo.RatingRepo;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class RatingServiceImpl implements RatingService {
 
-    @Autowired
+
     private RatingRepo ratingRepo;
 
     public void saveAll(List<Rating> ratingList) {
@@ -19,6 +21,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Iterable<Rating> findByDate(String filter) {
+
         List<Rating> allMovies = ratingRepo.findAll();
 
         List<Rating> moviesByDate = new ArrayList<>();

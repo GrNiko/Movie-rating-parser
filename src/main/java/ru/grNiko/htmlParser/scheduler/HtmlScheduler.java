@@ -3,7 +3,6 @@ package ru.grNiko.htmlParser.scheduler;
 import lombok.SneakyThrows;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.grNiko.htmlParser.entity.Rating;
@@ -17,7 +16,10 @@ import java.util.List;
 @Component
 public class HtmlScheduler {
 
-    @Autowired
+    public HtmlScheduler(RatingService ratingService) {
+        this.ratingService = ratingService;
+    }
+
     RatingService ratingService;
 
     private static final String EVERY_MIN = "0 * * ? * *"; //only for test
@@ -59,8 +61,6 @@ public class HtmlScheduler {
 
             ratingList.add(new Rating(moviePosition, ratingValue, finalName, ratingCount));
         }
-
-        System.out.println(LocalDate.now()); //save marker
 
         ratingService.saveAll(ratingList);
 

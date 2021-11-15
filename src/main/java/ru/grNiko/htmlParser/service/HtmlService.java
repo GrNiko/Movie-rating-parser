@@ -11,12 +11,10 @@ public class HtmlService {
 
     public static Document getDocumentByUrl(String url) throws IOException {
 
-        Document document = Jsoup.connect(url)
+        return Jsoup.connect(url)
                 .userAgent("Opera")
                 .timeout(5000)
                 .referrer("https://www.google.com/")
                 .get();
-
-        return document;
     }
 }

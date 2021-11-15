@@ -17,16 +17,13 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = 0L;
-    @Column
     private Integer position;
-    @Column
     private String rating;
-    @Column
     private String name;
-    @Column
+    @Column(name = "vote_count")
     private String voteCount;
-    @Column
-    private @Getter LocalDate date = LocalDate.now();
+    @Getter
+    private LocalDate date = LocalDate.now();
 
     public Rating(Integer position, String rating, String name, String voteCount) {
         this.position = position;
