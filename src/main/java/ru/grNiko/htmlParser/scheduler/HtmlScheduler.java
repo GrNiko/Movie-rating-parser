@@ -10,6 +10,7 @@ import ru.grNiko.htmlParser.entity.Rating;
 import ru.grNiko.htmlParser.service.HtmlService;
 import ru.grNiko.htmlParser.service.RatingService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +20,9 @@ public class HtmlScheduler {
     @Autowired
     RatingService ratingService;
 
-    private static final String EVERY_DAY = "0 0 0 * * ?";
-    private static final String EVERY_MIN = "0 * * ? * *";
+    private static final String EVERY_MIN = "0 * * ? * *"; //only for test
+
+    private static final String EVERY_DAY = "0 0 0 * * ?"; //every day at midnight
     private static final String URL = "http://kinopoisk.ru/top";
     private static final Integer MOVIE_COUNT = 10;
     private static final String NAME_ROOT = "selection-film-item-meta__link";
@@ -31,7 +33,7 @@ public class HtmlScheduler {
     private static final String RATING_COUNT = "rating__count";
 
     @SneakyThrows
-    @Scheduled(cron = EVERY_MIN)
+    @Scheduled(cron = EVERY_DAY)
     public void parseRating() {
 
 
@@ -58,7 +60,8 @@ public class HtmlScheduler {
             ratingList.add(new Rating(moviePosition, ratingValue, finalName, ratingCount));
         }
 
-        System.out.println(ratingList.get(0).getDate().toString());
+        System.out.println(LocalDate.now()); //save marker
+
         ratingService.saveAll(ratingList);
 
     }

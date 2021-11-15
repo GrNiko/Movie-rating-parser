@@ -25,7 +25,7 @@ public class Rating {
     private String name;
     @Column
     private String voteCount;
-    @Column(updatable = true)
+    @Column
     private @Getter LocalDate date = LocalDate.now();
 
     public Rating(Integer position, String rating, String name, String voteCount) {

@@ -17,10 +17,6 @@ public class RatingServiceImpl implements RatingService {
         ratingRepo.saveAll(ratingList);
     }
 
-    public List<Rating> findAll() {
-        return ratingRepo.findAll();
-    }
-
     @Override
     public Iterable<Rating> findByDate(String filter) {
         List<Rating> allMovies = ratingRepo.findAll();
