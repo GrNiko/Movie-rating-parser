@@ -5,11 +5,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ru.grNiko.htmlParser.entity.Rating;
+import ru.grNiko.htmlParser.dto.RatingDTO;
 import ru.grNiko.htmlParser.service.HtmlService;
 import ru.grNiko.htmlParser.service.RatingService;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class HtmlScheduler {
     public void parseRating() {
 
 
-        List<Rating> ratingList = new ArrayList<>();
+        List<RatingDTO> ratingList = new ArrayList<>();
         Document document = HtmlService.getDocumentByUrl(URL);
 
         Elements movieName = document.getElementsByClass(NAME_ROOT);
@@ -59,7 +58,13 @@ public class HtmlScheduler {
                 finalName = originalName;
             }
 
-            ratingList.add(new Rating(moviePosition, ratingValue, finalName, ratingCount));
+            ratingList.add(RatingDTO.builder()
+                    .position(moviePosition)
+                    .rating(ratingValue)
+                    .name(finalName)
+                    .voteCount(ratingCount)
+                    .build()
+            );
         }
 
         ratingService.saveAll(ratingList);

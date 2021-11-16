@@ -1,17 +1,15 @@
 package ru.grNiko.htmlParser.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@org.hibernate.annotations.Cache(
-        usage = CacheConcurrencyStrategy.READ_ONLY)
-@Cacheable
+@Builder
 public class Rating {
 
     @Id
@@ -22,7 +20,6 @@ public class Rating {
     private String name;
     @Column(name = "vote_count")
     private String voteCount;
-    @Getter
     private LocalDate date = LocalDate.now();
 
     public Rating(Integer position, String rating, String name, String voteCount) {
@@ -32,14 +29,5 @@ public class Rating {
         this.voteCount = voteCount;
     }
 
-    @Override
-    public String toString() {
-        return "Rating{" +
 
-                ", position=" + position +
-                ", rating='" + rating + '\'' +
-                ", name='" + name + '\'' +
-                ", voteCount='" + voteCount + '\'' +
-                '}';
-    }
 }

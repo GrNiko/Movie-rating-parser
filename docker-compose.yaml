@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  # APP
+  movie-rating-parser-app:
+    build: .
+    container_name: movie-rating-parser-app
+    restart: unless-stopped
+    environment:
+      DB_HOST: movie-rating-parser-db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: 123
+    ports:
+      - "8080:8080"
+    depends_on:
+      - movie-rating-parser-db
+  # DATABASE
+  movie-rating-parser-db:
+    image: postgres:10.2
+    container_name: movie-rating-parser-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: KinoDB
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.volume/postgres:/data/postgres
