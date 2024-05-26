@@ -1,6 +1,6 @@
 package ru.grNiko.htmlParser.controller;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +13,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Controller
 public class MainController {
 
-    private RatingService ratingService;
+    private final RatingService ratingService;
 
     @GetMapping("/")
     public String root() {
@@ -27,14 +27,16 @@ public class MainController {
     @PostMapping
     public String inputResult(Map<String, Object> model,
                               @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate filter) {
-        List<RatingDTO> movies;
-        if (filter != null) {
-            movies = ratingService.findByDate(filter);
-        } else {
+
+        if (filter == null) {
             return "main";
         }
+
+        List<RatingDTO> movies;
+        movies = ratingService.findByDate(filter);
         model.put("movies", movies);
         model.put("filter", filter);
+
         return "main";
     }
 }

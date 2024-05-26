@@ -1,7 +1,6 @@
 package ru.grNiko.htmlParser.service;
 
 import lombok.AllArgsConstructor;
-import lombok.var;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.grNiko.htmlParser.dto.RatingDTO;
